@@ -2,155 +2,174 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lineage 2.7 Classic Community</title>
+    <title>Lineage 2.7 Classic - Inven Style Portal</title>
     <style>
-        /* [1. 기본 스타일] */
+        :root {
+            --gold: #d4af37;
+            --dark-bg: rgba(10, 10, 10, 0.85);
+            --glass: rgba(20, 20, 20, 0.7);
+            --border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
         body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #0a0a0a;
-            font-family: 'Apple SD Gothic Neo', sans-serif;
-            overflow: hidden;
-            color: #d4af37;
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background: #000; font-family: 'Malgun Gothic', sans-serif;
+            overflow-x: hidden; color: #eee;
         }
 
+        /* [1] 유튜브 배경 고정 */
+        .video-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none;
+        }
+        .video-bg iframe {
+            width: 100vw; height: 100vh; transform: scale(1.5);
+        }
+
+        /* [2] 상용화 3단 그리드 레이아웃 */
         .container {
-            display: flex;
-            width: 100%;
-            height: 100vh;
-        }
-
-        /* [2. 좌측 메뉴] */
-        .sidebar {
-            width: 250px;
-            background: rgba(15, 15, 15, 0.95);
-            border-right: 1px solid #332b1a;
-            display: flex;
-            flex-direction: column;
-            padding: 20px 0;
-            z-index: 10;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.5);
-        }
-
-        .logo {
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 30px;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-        }
-
-        .menu-item {
-            padding: 15px 25px;
-            margin: 5px 15px;
-            cursor: pointer;
-            border: 1px solid transparent;
-            transition: all 0.3s ease;
-            font-weight: 500;
+            display: grid;
+            grid-template-columns: 250px 1fr 300px;
+            gap: 15px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
             position: relative;
-            background: rgba(255, 255, 255, 0.03);
+        }
+
+        /* [3] 공통 모듈 스타일 (인벤 스타일) */
+        .module {
+            background: var(--dark-bg);
+            border: var(--border);
             border-radius: 4px;
-            text-align: center;
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .module-title {
+            font-size: 14px; font-weight: bold; color: var(--gold);
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 5px; margin-bottom: 10px;
+            display: flex; justify-content: space-between;
         }
 
-        .menu-item:hover {
-            background: rgba(212, 175, 55, 0.1);
-            color: #ffffff;
-            border: 1px solid #d4af37;
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.6), inset 0 0 10px rgba(212, 175, 55, 0.4);
-            text-shadow: 0 0 8px #fff;
+        /* [4] 계급제 프로필 (좌측) */
+        .profile-card { text-align: center; }
+        .rank-badge {
+            width: 60px; height: 60px; background: #333;
+            margin: 0 auto 10px; border-radius: 50%;
+            border: 2px solid var(--gold);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px;
         }
+        .user-info .name { font-weight: bold; font-size: 18px; }
+        .user-info .rank-name { color: #aaa; font-size: 13px; margin-top: 5px; }
 
-        /* [3. 영상 배경 레이아웃 - CSS 안으로 정상 편입] */
-        .main-content {
-            flex: 1;
-            position: relative;
-            background: #000;
-            overflow: hidden;
+        /* [5] 보스 타이머 (중앙 상단) */
+        .boss-timer-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
         }
+        .boss-item {
+            background: rgba(255,255,255,0.05);
+            padding: 10px; border-radius: 4px; text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .boss-item .time { font-size: 20px; font-weight: bold; color: #ff4444; }
+        .boss-item .name { font-size: 12px; color: #bbb; }
 
-        .video-background-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
+        /* [6] 최신 화제 리스트 (중앙 하단) */
+        .post-list { list-style: none; padding: 0; margin: 0; }
+        .post-list li {
+            padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 14px; display: flex; justify-content: space-between;
         }
+        .post-list li:hover { color: var(--gold); cursor: pointer; }
+        .post-list .comment-count { color: #ff4444; font-size: 11px; margin-left: 5px; }
 
-        .video-background-container iframe {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100vw;
-            height: 100vh;
-            transform: translate(-50%, -50%) scale(1.5); /* 꽉 차게 확대 */
-            border: none;
-        }
-
-        .video-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0) 100%);
-            z-index: 2;
-        }
-
-        .content-info {
-            position: absolute;
-            bottom: 50px;
-            left: 50px;
-            z-index: 3;
-        }
-
-        .content-info h1 {
-            font-size: 2.5rem;
-            margin: 0;
-            color: #fff;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
-        }
+        /* [7] 계급 랭킹 (우측) */
+        .rank-list { font-size: 13px; }
+        .rank-row { display: flex; justify-content: space-between; padding: 5px 0; }
+        .rank-row .gold-text { color: var(--gold); }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <nav class="sidebar">
-        <div class="logo">LINEAGE 2.7<br>CLASSIC</div>
-        <div class="menu-item">노하우</div>
-        <div class="menu-item">스크린샷</div>
-        <div class="menu-item">에피소드</div>
-        <div class="menu-item">내캐릭자랑</div>
-        <div class="menu-item">유머게시판</div>
-        <div class="menu-item">자유시장</div>
-        <div class="menu-item">혈마크자료실</div>
-        <div class="menu-item">자유게시판</div>
-    </nav>
-
-  <main class="main-content">
-    <div class="video-background-container">
-        <iframe 
-            src="https://www.youtube.com/embed/Pb0bcrIhnmg?autoplay=1&mute=1&loop=1&playlist=Pb0bcrIhnmg&controls=0&rel=0&modestbranding=1&iv_load_policy=3" 
-            allow="autoplay; encrypted-media" 
-            frameborder="0">
-        </iframe>
+    <div class="video-bg">
+        <iframe src="https://www.youtube.com/embed/Pb0bcrIhnmg?autoplay=1&mute=1&loop=1&playlist=Pb0bcrIhnmg&controls=0" frameborder="0"></iframe>
     </div>
 
-    <div class="video-overlay"></div>
-    
-    <div class="content-info">
-        <h1>추억의 군주, 다시 깨어납니다</h1>
-        <p>2026 리니지 클래식 커뮤니티 프로젝트</p>
+    <div class="container">
+        <aside>
+            <div class="module profile-card">
+                <div class="rank-badge">🎖️</div>
+                <div class="user-info">
+                    <div class="name">리니지매니아</div>
+                    <div class="rank-name">[계급] 이등병</div>
+                    <div style="font-size: 11px; color: #666; margin-top: 5px;">다음 진급까지 경험치 85%</div>
+                </div>
+            </div>
+            <div class="module">
+                <div class="module-title">커뮤니티</div>
+                <div class="post-list">
+                    <li>▶ 노하우 게시판</li>
+                    <li>▶ 자유게시판</li>
+                    <li>▶ 혈마크자료실</li>
+                    <li>▶ 시장/거래</li>
+                </div>
+            </div>
+        </aside>
+
+        <main>
+            <div class="module">
+                <div class="module-title">
+                    REALTIME BOSS TIMER 
+                    <span style="font-size: 11px; font-weight: normal;">*병장 이상 제보 가능</span>
+                </div>
+                <div class="boss-timer-grid">
+                    <div class="boss-item">
+                        <div class="name">안타라스</div>
+                        <div class="time">01:24:55</div>
+                    </div>
+                    <div class="boss-item">
+                        <div class="name">데스나이트</div>
+                        <div class="time">00:12:04</div>
+                    </div>
+                    <div class="boss-item">
+                        <div class="name">카스파</div>
+                        <div class="time">READY</div>
+                    </div>
+                    <div class="boss-item">
+                        <div class="name">네크로맨서</div>
+                        <div class="time">05:44:21</div>
+                    </div>
+                </div>
+            </div>
+            <div class="module">
+                <div class="module-title">오늘의 화제</div>
+                <ul class="post-list">
+                    <li>미쳤다고 욕먹고 있는 강화 성공기 <span class="comment-count">[82]</span></li>
+                    <li>2.7 버전에서 기사가 살아남는 법 <span class="comment-count">[45]</span></li>
+                    <li>[제보] 기란 마을 입구 현피 현장 상황 <span class="comment-count">[121]</span></li>
+                    <li>혈맹원 모집합니다 (매너 필수) <span class="comment-count">[12]</span></li>
+                </ul>
+            </div>
+        </main>
+
+        <aside>
+            <div class="module">
+                <div class="module-title">서버 진급 소식</div>
+                <div class="rank-list">
+                    <div class="rank-row"><span>만만</span> <span class="gold-text">장군 진급!</span></div>
+                    <div class="rank-row"><span>봉쿠레</span> <span class="gold-text">대령 진급!</span></div>
+                    <div class="rank-row"><span>기사단장</span> <span>병장 진급</span></div>
+                </div>
+            </div>
+            <div class="module" style="height: 200px; display: flex; align-items: center; justify-content: center; background: rgba(212,175,55,0.1);">
+                <span style="color: var(--gold); font-size: 12px;">AD: 축젤/축데이 시세 확인</span>
+            </div>
+        </aside>
     </div>
-</main>
-</div>
 
 </body>
 </html>
