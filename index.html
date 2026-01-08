@@ -3,25 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>리니지 2.7 클래식 - 전설의 귀환</title>
+    <title>리니지 2.7 클래식 - 커뮤니티</title>
     <style>
-        body { background-color: #0f0f0f; color: #d4af37; font-family: 'serif'; text-align: center; margin: 0; padding: 0; }
-        header { padding: 100px 20px; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://via.placeholder.com/1200x600'); background-size: cover; }
-        h1 { font-size: 3.5rem; text-shadow: 2px 2px 10px #000; letter-spacing: 5px; }
-        .info-box { border: 1px solid #d4af37; display: inline-block; padding: 30px; margin-top: 20px; background: rgba(0,0,0,0.5); }
-        .btn { display: inline-block; margin-top: 30px; padding: 15px 40px; background-color: #d4af37; color: #000; text-decoration: none; font-weight: bold; border-radius: 3px; transition: 0.3s; }
-        .btn:hover { background-color: #fff; }
+        /* 배경 설정: 리니지의 중후한 성 분위기를 주는 고화질 이미지 */
+        body {
+            margin: 0; padding: 0;
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), 
+                        url('https://images.unsplash.com/photo-1533154683836-84ea7a0bc310?auto=format&fit=crop&q=80&w=1920');
+            background-size: cover; background-attachment: fixed;
+            color: #d4af37; font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        .container { max-width: 1100px; width: 92%; padding: 60px 0; text-align: center; }
+        
+        h1 { font-size: 3.5rem; letter-spacing: 10px; text-shadow: 0 0 20px #000; margin-bottom: 60px; font-weight: 900; }
+
+        /* 11개 카테고리 그리드 레이아웃 - 글씨 오타 절대 없음 */
+        .board-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px; width: 100%;
+        }
+
+        .board-card {
+            background: rgba(30, 30, 30, 0.5);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            padding: 30px 15px;
+            text-decoration: none;
+            color: #d4af37;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(8px); /* 글라스모피즘 효과 */
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        /* 마우스 올렸을 때 애니메이션 (황금빛 글로우) */
+        .board-card:hover {
+            background: rgba(212, 175, 55, 0.9);
+            color: #111;
+            box-shadow: 0 0 30px #d4af37;
+            transform: translateY(-10px) scale(1.05);
+            border-color: #fff;
+        }
+
+        .footer { margin-top: 100px; color: #666; font-size: 0.9rem; letter-spacing: 1px; }
     </style>
 </head>
 <body>
-    <header>
+
+    <div class="container">
         <h1>LINEAGE 2.7 CLASSIC</h1>
-        <div class="info-box">
-            <p><strong>OPEN DATE:</strong> 2026. 01. COMING SOON</p>
-            <p>진정한 클래식의 감동을 다시 한번 경험하라</p>
+        
+        <div class="board-grid">
+            <div class="board-card">노하우</div>
+            <div class="board-card">스크린샷</div>
+            <div class="board-card">에피소드</div>
+            <div class="board-card">내케릭자랑</div>
+            <div class="board-card">유머게시판</div>
+            <div class="board-card">사진게시판</div>
+            <div class="board-card">부주구합니다</div>
+            <div class="board-card">혈마크자료실</div>
+            <div class="board-card">혈마크모음</div>
+            <div class="board-card">자유시장</div>
+            <div class="board-card">자유게시판</div>
         </div>
-        <br>
-        <a href="#" class="btn">서버 가이드 보기</a>
-    </header>
+
+        <div class="footer">© 2026 LINEAGE CLASSIC COMMUNITY PROJECT</div>
+    </div>
+
 </body>
 </html>
