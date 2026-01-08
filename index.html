@@ -3,76 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>리니지 2.7 클래식 - 커뮤니티</title>
+    <title>Lineage 2.7 Classic Community</title>
     <style>
-        /* 배경 설정: 리니지의 중후한 성 분위기를 주는 고화질 이미지 */
-        body {
-            margin: 0; padding: 0;
-            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), 
-                        url('https://images.unsplash.com/photo-1533154683836-84ea7a0bc310?auto=format&fit=crop&q=80&w=1920');
-            background-size: cover; background-attachment: fixed;
-            color: #d4af37; font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-            display: flex; flex-direction: column; align-items: center;
+        /* 1. 기본 스타일 및 배경 설정 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0a0a0a; /* 깊은 어둠 배경 */
+            font-family: 'Apple SD Gothic Neo', sans-serif;
+            overflow: hidden; /* 스크롤 방지 */
+            color: #d4af37; /* 리니지 상징 금색 */
         }
 
-        .container { max-width: 1100px; width: 92%; padding: 60px 0; text-align: center; }
-        
-        h1 { font-size: 3.5rem; letter-spacing: 10px; text-shadow: 0 0 20px #000; margin-bottom: 60px; font-weight: 900; }
-
-        /* 11개 카테고리 그리드 레이아웃 - 글씨 오타 절대 없음 */
-        .board-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px; width: 100%;
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
         }
 
-        .board-card {
-            background: rgba(30, 30, 30, 0.5);
-            border: 1px solid rgba(212, 175, 55, 0.5);
-            padding: 30px 15px;
-            text-decoration: none;
-            color: #d4af37;
-            font-weight: bold;
+        /* 2. 좌측 세로 메뉴 (유튜브 스타일) */
+        .sidebar {
+            width: 250px;
+            background: rgba(15, 15, 15, 0.95);
+            border-right: 1px solid #332b1a;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+            z-index: 10;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+        }
+
+        .logo {
+            text-align: center;
             font-size: 1.2rem;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(8px); /* 글라스모피즘 효과 */
+            font-weight: bold;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .menu-item {
+            padding: 15px 25px;
+            margin: 5px 15px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 4px;
+            text-align: center;
         }
 
-        /* 마우스 올렸을 때 애니메이션 (황금빛 글로우) */
-        .board-card:hover {
-            background: rgba(212, 175, 55, 0.9);
-            color: #111;
-            box-shadow: 0 0 30px #d4af37;
-            transform: translateY(-10px) scale(1.05);
-            border-color: #fff;
+        /* 3. 천재적 아이디어: 황금빛 인챈트 이펙트 */
+        .menu-item:hover {
+            background: rgba(212, 175, 55, 0.1);
+            color: #ffffff;
+            border: 1px solid #d4af37;
+            transform: scale(1.05); /* 살짝 커지는 효과 */
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.6), 
+                        inset 0 0 10px rgba(212, 175, 55, 0.4);
+            text-shadow: 0 0 8px #fff;
         }
 
-        .footer { margin-top: 100px; color: #666; font-size: 0.9rem; letter-spacing: 1px; }
+        /* 마우스 오버 시 옆에 빛나는 바 추가 */
+        .menu-item:hover::before {
+            content: '';
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 80%;
+            background: #d4af37;
+            box-shadow: 0 0 15px #d4af37;
+        }
+
+        /* 4. 우측 영상 영역 (시네마틱) */
+        .main-content {
+            flex: 1;
+            position: relative;
+            background: #000;
+        }
+
+        .video-background {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6; /* 영상 위 텍스트 가독성을 위해 살짝 어둡게 */
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(10,10,10,1) 0%, rgba(10,10,10,0) 20%);
+            pointer-events: none; /* 영상 클릭 방해 금지 */
+        }
+
+        .content-info {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            z-index: 5;
+        }
+
+        .content-info h1 {
+            font-size: 3rem;
+            margin: 0;
+            color: #fff;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>LINEAGE 2.7 CLASSIC</h1>
-        
-        <div class="board-grid">
-            <div class="board-card">노하우</div>
-            <div class="board-card">스크린샷</div>
-            <div class="board-card">에피소드</div>
-            <div class="board-card">내케릭자랑</div>
-            <div class="board-card">유머게시판</div>
-            <div class="board-card">사진게시판</div>
-            <div class="board-card">부주구합니다</div>
-            <div class="board-card">혈마크자료실</div>
-            <div class="board-card">혈마크모음</div>
-            <div class="board-card">자유시장</div>
-            <div class="board-card">자유게시판</div>
-        </div>
+<div class="container">
+    <nav class="sidebar">
+        <div class="logo">LINEAGE 2.7<br>CLASSIC</div>
+        <div class="menu-item">노하우</div>
+        <div class="menu-item">스크린샷</div>
+        <div class="menu-item">에피소드</div>
+        <div class="menu-item">내캐릭자랑</div>
+        <div class="menu-item">유머게시판</div>
+        <div class="menu-item">자유시장</div>
+        <div class="menu-item">혈마크자료실</div>
+        <div class="menu-item">자유게시판</div>
+    </nav>
 
-        <div class="footer">© 2026 LINEAGE CLASSIC COMMUNITY PROJECT</div>
-    </div>
+    <main class="main-content">
+        <video class="video-background" autoplay muted loop>
+            <source src="your-video-file.mp4" type="video/mp4">
+            <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=1471" style="width:100%; height:100%; object-fit:cover;">
+        </video>
+        <div class="video-overlay"></div>
+        
+        <div class="content-info">
+            <h1>추억의 공성전, 다시 시작됩니다</h1>
+            <p>2026년 리니지 클래식 커뮤니티 프로젝트</p>
+        </div>
+    </main>
+</div>
 
 </body>
 </html>
